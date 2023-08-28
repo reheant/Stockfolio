@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+{% load static %}
 <link rel="stylesheet" href="static/home.css" />
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"
@@ -8,40 +9,17 @@
 ></script>
 {% if ticker %} 
 
-<div class="image-container">
-	<div class="centered-div">
-		<img src="static/mainPage.jpeg" alt="My Image">
-		<form action = "{% url 'home' %}" class="form-inline my-2 my-lg-0" method="POST">
-			{% csrf_token %}
-		  <input class="form-control mr-sm-2 w-75" type="search" placeholder="Enter Ticker Symbol" aria-label="Search" name = ticker>
-		  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Stock Quote</button>
-		</form> 
-	</div>
-</div>
+<div class="welcome">Welcome to my Stock Application. Enter a Ticker symbol or go to the portfolio page to begin.</div>
 
 {% endif %} 
 
-
-
-
-<div class="box-container">
-    {% for index in article_links %}
-		{% comment %} {{ forloop.counter }} {% endcomment %}
-		<div class="box">
-			<a href="{{ article_links.0 }}">
-				<img src="{{ article_images.0 }}" alt="Image">
-				<h2>{{ article_title.0 }}</h2>
-			</a>
-		</div>
-    {% endfor %}
-</div>
 {% if api %} {% if api == 'Error'%}
 There was an error with the entered ticker symbol. Please try again. {% else %}
-<div classname="contentContainer">
-  	<div classname="title"> {{api.Name}} </div>
-      <div classname="description">{{api.Description}} </div>
-      <div classname="subsectionAndGraph">
-		<body classname="graph">
+<div class="contentContainer">
+  	<div class="title"> {{api.Name}} </div>
+      <div class="description">{{api.Description}} </div>
+      <div class="subsectionAndGraph">
+		<body class="graph">
 			<div>
 				<canvas id="myChart"></canvas>
 			</div>
@@ -75,57 +53,20 @@ There was an error with the entered ticker symbol. Please try again. {% else %}
 				});
 			</script>
 			</body>
-        <div classname="subSection">
-          <div><strong> Ticker Symbol: </strong>{{api.Symbol}}</div>
-          <div><strong> Exchange: </strong>{{api.Exchange}}</div>
-        	<div><strong> Currrency: </strong>: {{api.Currency}} </div>
-            <div><strong> Sector: </strong>: {{api.Sector}}</div>
-            <div><strong> Industry: </strong>: {{api.Industry}}</div>
-            <div><strong> Market Cap: </strong>:{{api.MarketCapitalization}}</div>
-            <div><strong> PE Ratio: </strong>: {{api.PERatio}} </div>
-            <div><strong> Dividends per Share: </strong>:{{api.DividendPerShare}}</div>
-            <div><strong> Dividend Yield: </strong>{{api.DividendYield}}%</div>
-			
+        <div class="subSection">
+			<div>
+				<div><strong> Ticker Symbol: </strong>{{api.Symbol}}</div>
+          		<div><strong> Exchange: </strong>{{api.Exchange}}</div>
+            	<div><strong> Sector: </strong> {{api.Sector}}</div>
+				<div><strong> Industry: </strong> {{api.Industry}}</div>
 			</div>
-
-                                      {% comment %}
-                                      <h1>{{api.companyName}}</h1>
-                                      <br /><br />
-                                      Price: ${{api.latestPrice }}<br />
-                                      Previous Close: ${{api.previousClose }}<br />
-                                      Market Cap: ${{api.marketCap }}<br />
-                                      Year to Date Change: {{api.ytdChange }}<br />
-                                      52 Week High: {{api.week52High }}<br />
-                                      52 Week Low: {{api.week52Low }}<br />
-                                      {% endcomment %}
-                                    </div>
-									<div class="box-container">
-									{% comment %} {% for index in '0123456789'|make_list %}
-										<div class="box">
-											<a href="{{ article_links.index }}">
-												<img src="{{ article_images.index }}" alt="Image">
-											</a>
-											<h2>{{ article_titles.index }}</h2>
-										</div>
-									{% endfor %} {% endcomment %}
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+			<div>
+            	<div><strong> Market Cap: </strong>{{api.MarketCapitalization}}$</div>
+            	<div><strong> PE Ratio: </strong> {{api.PERatio}} </div>
+            	<div><strong> Dividends per Share: </strong>{{api.DividendPerShare}}</div>
+            	<div><strong> Dividend Yield: </strong>{{api.DividendYield}}%</div>
+			</div>
         </div>
-      </div>
-    </div>
-  </div>
 </div>
 {% endif %} {% endif %} 
 {% endblock %}

@@ -1,5 +1,5 @@
 .description {
-  background-color: red;
+  padding-bottom: 0.5rem;
 }
 
 .subsection {
@@ -7,29 +7,23 @@
   flex-direction: column;
 }
 
-.contentContainer {
-  display: flex;
-  flex-direction: row;
-}
+
 
 .title{
-  background-color: red;
-}
-
-.main{
-  background-color: red;
-}
-
-.image-container {
   text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+}
+
+.subSection {
+  padding-top: 0.5rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Adjust this based on your design */
+  flex-direction: row;
+  justify-content: space-between;
+}
+.welcome {
+  text-align: center;
+  padding-top: 2rem;
 }
 
-.centered-div {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8); /* Add background color to the div */
-  padding: 20px; /* Add padding around the content */
-}

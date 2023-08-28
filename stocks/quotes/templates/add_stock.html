@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1> Add Stock </h1>
+<h1> My Portfolio </h1>
 <br/>
 <form action = "{% url 'add_stock' %}" class="form-inline my-2 my-lg-0" method="POST">
         {% csrf_token %}
@@ -40,7 +40,7 @@
     <th scope="row">{{list_item.Name}}</th>
       <td>{{list_item.Symbol}}</td>
       <td>${{list_item.price}}</td>
-      <td>${{list_item.PERatio}}</td>
+      <td>{{list_item.PERatio}}</td>
       <td>${{list_item.MarketCapitalization}}</td>
       <td>{{list_item.DividendYield}}</td>
       <td>${{list_item.52WeekHigh}}</td>
