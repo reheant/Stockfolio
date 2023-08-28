@@ -2,15 +2,15 @@
 
 {% block content %}
 
-<h1> Add Stock </h1>
+<h1> My Portfolio </h1>
+<div> Insert ticker symbol below to add stock to portfolio. This information will be stored in the database. </div>
 <br/>
-
 <form action = "{% url 'add_stock' %}" class="form-inline my-2 my-lg-0" method="POST">
         {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" placeholder="Add to Portfolio" aria-label="Search" name = ticker>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Stock</button>
     </form>
-<br/><br/>
+<br/>
 
 
 
@@ -20,9 +20,9 @@
       <th scope="col">Company Name</th>
       <th scope="col">Ticker Symbol</th>
       <th scope="col">Stock Price</th>
-      <th scope="col">Previous Close</th>
+      <th scope="col">PE Ratio</th>
       <th scope="col">Market Cap</th>
-      <th scope="col">Year to Date Change</th>
+      <th scope="col">Dividend Yield</th>
       <th scope="col">52 Week High</th>
       <th scope="col">52 Week Low</th>
 
@@ -34,25 +34,20 @@
 
 
 
-{% if ticker %}
- 
+{% if ticker %}  
+  {%for list_item in output%}
+    </tr>
 
-
-
-  
-  		{%for list_item in output%}
-	  		</tr>
-
-	  		<th scope="row">{{list_item.companyName}}</th>
-	      	<td>{{list_item.symbol}}</td>
-	      	<td>${{list_item.latestPrice}}</td>
-	      	<td>${{list_item.previousClose}}</td>
-	      	<td>${{list_item.marketCap}}</td>
-	      	<td>{{list_item.ytdChange}}</td>
-	      	<td>${{list_item.week52High}}</td>
-	      	<td>${{list_item.week52Low}}</td>
-	      	</tr>
-      	{%endfor%}
+    <th scope="row">{{list_item.Name}}</th>
+      <td>{{list_item.Symbol}}</td>
+      <td>${{list_item.price}}</td>
+      <td>{{list_item.PERatio}}</td>
+      <td>${{list_item.MarketCapitalization}}</td>
+      <td>{{list_item.DividendYield}}</td>
+      <td>${{list_item.52WeekHigh}}</td>
+      <td>${{list_item.52WeekLow}}</td>
+      </tr>
+    {%endfor%}
 
       	
  </table>
@@ -62,7 +57,7 @@
 		
 {%endif%}
 
-<br><br/>
+<br>
 {% for item in ticker %}
 	<a href="{% url 'delete' item.id%}">
 	<button type="button" class="btn btn-outline-danger">Delete {{item}}</button></a> &nbsp;&nbsp;&nbsp;

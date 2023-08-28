@@ -1,35 +1,72 @@
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="static/home.css" />
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"
+  integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+{% if ticker %} 
 
-{% extends 'base.html' %}
+<div class="welcome">Welcome to my Stock Application. Enter a Ticker symbol or go to the portfolio page to begin.</div>
 
-{% block content %}
+{% endif %} 
 
-
-{% if ticker %}
-	{{ticker}}
-
-{% endif %}
-
-
-
-{% if api %}
-
-	{% if api == 'Error'%}
-		There was an error with the entered ticker symbol.
-		Please try again.
-
-	{% else %}
-
-		<h1>{{api.companyName}}</h1><br/><br/>
-		Price: ${{api.latestPrice }}<br/>
-		Previous Close: ${{api.previousClose }}<br/>
-		Market Cap: ${{api.marketCap }}<br/>
-		Year to Date Change: {{api.ytdChange }}<br/>
-		52 Week High: {{api.week52High }}<br/>
-		52 Week Low: {{api.week52Low }}<br/>
-		
-		
-	{% endif %}
-{% endif %}
-
-
+{% if api %} {% if api == 'Error'%}
+There was an error with the entered ticker symbol. Please try again. {% else %}
+<div class="contentContainer">
+  	<div class="title"> {{api.Name}} </div>
+      <div class="description">{{api.Description}} </div>
+      <div class="subsectionAndGraph">
+		<body class="graph">
+			<div>
+				<canvas id="myChart"></canvas>
+			</div>
+			
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			
+			<script>
+				const ctx = document.getElementById("myChart");
+				var prices = {{api_price | safe}}
+				var dates = {{api_date | safe}}
+				var ticker = {{ticker}}
+				new Chart(ctx, {
+				type: "line",
+				data: {
+					labels: dates,
+					datasets: [
+					{
+						label: "Stock Price",
+						data: prices,
+						borderWidth: 1,
+					},
+					],
+				},
+				options: {
+					scales: {
+					y: {
+						beginAtZero: false,
+					},
+					},
+				},
+				});
+			</script>
+			</body>
+        <div class="subSection">
+			<div>
+				<div><strong> Ticker Symbol: </strong>{{api.Symbol}}</div>
+          		<div><strong> Exchange: </strong>{{api.Exchange}}</div>
+            	<div><strong> Sector: </strong> {{api.Sector}}</div>
+				<div><strong> Industry: </strong> {{api.Industry}}</div>
+			</div>
+			<div>
+            	<div><strong> Market Cap: </strong>{{api.MarketCapitalization}}$</div>
+            	<div><strong> PE Ratio: </strong> {{api.PERatio}} </div>
+            	<div><strong> Dividends per Share: </strong>{{api.DividendPerShare}}</div>
+            	<div><strong> Dividend Yield: </strong>{{api.DividendYield}}%</div>
+			</div>
+        </div>
+</div>
+{% endif %} {% endif %} 
 {% endblock %}

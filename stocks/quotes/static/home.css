@@ -1,0 +1,29 @@
+.description {
+  padding-bottom: 0.5rem;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.title{
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+}
+
+.subSection {
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.welcome {
+  text-align: center;
+  padding-top: 2rem;
+}
+
